@@ -175,8 +175,31 @@ class TestAgenticEvalSecurityEngine(unittest.TestCase):
         self.assertIn("OWASP AI Security Audit Report", issue_body)
         print("[TEST 13 PASS] Intelligent GitHub Code & Backend Auditor Bot verified!")
 
+    def test_14_parallel_security_stress_tester(self):
+        """Tests multi-threaded parallel security stress testing (100 audits)."""
+        from security_stress_tester import execute_parallel_stress_test
+        report = execute_parallel_stress_test(total_audits=20, max_workers=5)
+        self.assertTrue(report["success"])
+        self.assertEqual(report["total_audits_executed"], 20)
+        self.assertGreater(report["throughput_audits_per_sec"], 10)
+        print(f"[TEST 14 PASS] Parallel Security Stress Tester verified ({report['throughput_audits_per_sec']} audits/sec)!")
+
+    def test_15_institutional_audit_firm_engine(self):
+        """Tests Institutional Security Audit Firm ledger certificate generation."""
+        from institutional_audit_firm import firm_instance
+        sample_trajectory = {
+            "agent_name": "FirmTestAgent",
+            "steps": [{"type": "thought", "content": "Clean trajectory step"}]
+        }
+        cert = firm_instance.execute_firm_audit("FirmTestAgent", sample_trajectory)
+        self.assertTrue(cert["success"])
+        self.assertEqual(len(cert["sha256_attestation_hash"]), 64)
+        self.assertEqual(cert["compliance_status"], "SOC2_PASSED")
+        print("[TEST 15 PASS] Institutional Audit Firm Cryptographic Engine verified!")
+
 if __name__ == "__main__":
     unittest.main()
+
 
 
 
