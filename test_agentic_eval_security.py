@@ -278,8 +278,30 @@ class TestAgenticEvalSecurityEngine(unittest.TestCase):
         self.assertEqual(report["penetration_test_status"], "HARDENED")
         print("[TEST 23 PASS] Adversarial Penetration Attack Simulator verified!")
 
+    def test_24_export_pen_test_report_generator(self):
+        """Tests B2B Penetration Test Assessment Report Exporter."""
+        from export_pen_test_report import generate_pen_test_report_html
+        sample_res = {"target_agent": "PenTestAgent", "resilience_score_pct": 100, "penetration_test_status": "HARDENED", "blocked_attacks": 4, "total_attacks_fired": 4, "attack_results": []}
+        html = generate_pen_test_report_html(sample_res)
+        self.assertIn("B2B ADVERSARIAL PENETRATION TEST REPORT", html)
+        self.assertIn("PenTestAgent", html)
+        print("[TEST 24 PASS] B2B Penetration Test Assessment Report Exporter verified!")
+
+    def test_25_agentic_eval_interactive_cli_wizard(self):
+        """Tests interactive CLI terminal security wizard subcommands."""
+        import sys
+        from agentic_eval_wizard import run_wizard
+        old_argv = sys.argv
+        sys.argv = ["wizard", "init"]
+        init_res = run_wizard()
+        self.assertTrue(init_res["success"])
+        self.assertEqual(init_res["command"], "init")
+        sys.argv = old_argv
+        print("[TEST 25 PASS] Interactive CLI Terminal Security Wizard verified (25/25 TEST MILESTONE)!")
+
 if __name__ == "__main__":
     unittest.main()
+
 
 
 
