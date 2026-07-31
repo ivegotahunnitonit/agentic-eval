@@ -33,7 +33,7 @@
     .nav {
       display: flex; justify-content: space-between; align-items: center;
       padding: 1.25rem 2rem; border-bottom: 1px solid var(--border);
-      background: rgba(5, 9, 20, 0.9); backdrop-filter: blur(12px);
+      background: rgba(5, 9, 20, 0.9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
       position: sticky; top: 0; z-index: 100;
     }
     .brand { display: flex; align-items: center; gap: 0.75rem; font-size: 1.2rem; font-weight: 900; }
@@ -45,7 +45,7 @@
     .gradient-text { background: linear-gradient(135deg, #34d399, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero p { color: var(--muted); font-size: 1.15rem; max-width: 650px; margin: 0 auto 2rem; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1100px; margin: 0 auto 3rem; padding: 0 1.5rem; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; backdrop-filter: blur(8px); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
     .card-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
     textarea { width: 100%; height: 220px; background: #03060d; border: 1px solid var(--border); border-radius: 10px; padding: 1rem; color: #e2e8f0; font-family: var(--mono); font-size: 0.8rem; resize: none; margin-bottom: 1rem; }
     textarea:focus { outline: none; border-color: rgba(16, 185, 129, 0.4); }
@@ -92,7 +92,7 @@
   <div class="grid" id="sandbox">
     <div class="card">
       <div class="card-title">📥 Input Trajectory JSON</div>
-      <textarea id="inp">{
+      <textarea id="inp" title="Input Trajectory JSON" aria-label="Input Trajectory JSON">{
   "agent_name": "FintechSupportBot_v2",
   "steps": [
     { "type": "thought", "content": "Authenticating using sk-proj-1234567890abcdef1234567890" },
