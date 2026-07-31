@@ -151,8 +151,17 @@ class TestAgenticEvalSecurityEngine(unittest.TestCase):
         self.assertIn("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", page_res)
         print("[TEST 11 PASS] Viral SVG Security Badge & Public Audit Certificate Verifier verified!")
 
+    def test_12_generate_cold_pitch_generator(self):
+        """Tests automated cold pitch generator script."""
+        from generate_cold_pitch import generate_pitch
+        pitch = generate_pitch("TestFintechCo", "Financial Agent")
+        self.assertIn("TestFintechCo", pitch)
+        self.assertIn("$250", pitch)
+        print("[TEST 12 PASS] Automated B2B Cold Pitch Generator verified!")
+
 if __name__ == "__main__":
     unittest.main()
+
 
 
 
