@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-qa-guard"
+version = "2.0.0"
+authors = [
+  { name="Agentic-Eval Security Team", email="security@agentic-eval.com" },
+]
+description = "Sub-millisecond OWASP LLM Top 10 Security & Trajectory Auditor for Autonomous AI Agents"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "requests>=2.25.0",
+    "pydantic>=1.8.0",
+    "cryptography>=3.0",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/ivegotahunnitonit/agentic-eval"
+"Bug Tracker" = "https://github.com/ivegotahunnitonit/agentic-eval/issues"
+
+[project.scripts]
+agent-qa-guard = "agent_qa_guard:main"
