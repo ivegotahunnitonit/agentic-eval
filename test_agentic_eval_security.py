@@ -172,8 +172,9 @@ class TestAgenticEvalSecurityEngine(unittest.TestCase):
             "vulnerable_files_count": 1,
             "findings": [audit_res]
         })
-        self.assertIn("OWASP AI Security Audit Report", issue_body)
+        self.assertIn("Agentic-Eval Security Audit Report", issue_body)
         print("[TEST 13 PASS] Intelligent GitHub Code & Backend Auditor Bot verified!")
+
 
     def test_14_parallel_security_stress_tester(self):
         """Tests multi-threaded parallel security stress testing (100 audits)."""
@@ -197,8 +198,35 @@ class TestAgenticEvalSecurityEngine(unittest.TestCase):
         self.assertEqual(cert["compliance_status"], "SOC2_PASSED")
         print("[TEST 15 PASS] Institutional Audit Firm Cryptographic Engine verified!")
 
+    def test_16_billy_charlie_persona_bot_engine(self):
+        """Tests Billy Bob Thornton + Charlie Sheen persona commentary in GitHub bot."""
+        from agentic_eval_bot import bot_instance
+        audit_res = {"target_repo": "test/agent-repo", "vulnerable_files_count": 1, "findings": []}
+        issue_body = bot_instance.generate_github_issue_body(audit_res, persona_mode=True)
+        self.assertIn("scotch", issue_body)
+        self.assertIn("Malibu", issue_body)
+        print("[TEST 16 PASS] Billy Bob Thornton + Charlie Sheen Persona Engine verified!")
+
+    def test_17_export_pdf_certificate_generator(self):
+        """Tests print-ready B2B audit certificate HTML/PDF exporter."""
+        from export_audit_pdf import generate_pdf_certificate_html
+        cert_data = {"target_system": "FintechAgent_v1", "reliability_score_pct": 98, "compliance_status": "SOC2_PASSED"}
+        html = generate_pdf_certificate_html(cert_data)
+        self.assertIn("OFFICIAL B2B AI SECURITY AUDIT CERTIFICATE", html)
+        self.assertIn("FintechAgent_v1", html)
+        print("[TEST 17 PASS] B2B Audit Certificate HTML/PDF Exporter verified!")
+
+    def test_18_audit_firm_ledger_hashchain_integrity(self):
+        """Tests cryptographic hashchain ledger integrity for audit firm certificates."""
+        from audit_firm_ledger import ledger_instance
+        ledger_instance.record_audit_certificate("TestAgent_1", "hash_001")
+        ledger_instance.record_audit_certificate("TestAgent_2", "hash_002")
+        self.assertTrue(ledger_instance.verify_ledger_integrity())
+        print("[TEST 18 PASS] Audit Firm Cryptographic Hashchain Ledger Integrity verified!")
+
 if __name__ == "__main__":
     unittest.main()
+
 
 
 
