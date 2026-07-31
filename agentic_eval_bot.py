@@ -70,16 +70,25 @@ class IntelligentAgenticBot:
             "findings": findings
         }
 
-    def generate_github_issue_body(self, audit_result: Dict[str, Any]) -> str:
-        """Generates a professional, value-first GitHub Issue body for open-source maintainers."""
+    def generate_github_issue_body(self, audit_result: Dict[str, Any], persona_mode: bool = True) -> str:
+        """Generates a professional, high-impact GitHub Issue body with optional Billy-Charlie persona."""
         repo = audit_result.get("target_repo", "TargetRepo")
         vulnerable_count = audit_result.get("vulnerable_files_count", 0)
 
-        body = f"""### 🛡️ Agentic-Eval Automated OWASP AI Security Audit Report
+        intro_quote = (
+            "\"Look, I don't care how fancy your AI prompt is. If you're dropping raw OpenAI keys in public logs, "
+            "you're handing corporate lawyers a loaded gun and a map to your bank account. "
+            "Relax, pour yourself a scotch, and let's patch this leak before your CTO gets back from Malibu.\""
+            if persona_mode else "Automated OWASP AI Security Audit Report"
+        )
+
+        body = f"""### 🛡️ Agentic-Eval Security Audit Report
+
+> *{intro_quote}*
 
 Hello maintainers of **{repo}**,
 
-We ran an automated security scan on your AI agent codebase using **Agentic-Eval** (aligned with OWASP Top 10 for LLMs v2.0 standards).
+We ran a deep-scan security audit on your AI agent codebase using **Agentic-Eval** (aligned with OWASP Top 10 for LLMs v2.0 standards).
 
 #### 📊 Audit Findings Summary
 - **Vulnerable Files Detected:** {vulnerable_count}
@@ -98,9 +107,10 @@ We ran an automated security scan on your AI agent codebase using **Agentic-Eval
 1. Enforce OWASP LLM02 secret scrubbing proxy middleware on all agent thought logs.
 2. Configure exponential backoff loop breakers to prevent infinite tool call billing.
 
-*Report generated automatically by Agentic-Eval Security Bot.*
+*Audit executed by Agentic-Eval Security Bot (Billy-Charlie Persona Engine).*
 """
         return body
+
 
 bot_instance = IntelligentAgenticBot()
 
