@@ -159,8 +159,25 @@ class TestAgenticEvalSecurityEngine(unittest.TestCase):
         self.assertIn("$250", pitch)
         print("[TEST 12 PASS] Automated B2B Cold Pitch Generator verified!")
 
+    def test_13_intelligent_agentic_bot_auditor(self):
+        """Tests intelligent GitHub code & backend security bot."""
+        from agentic_eval_bot import bot_instance
+        vulnerable_code = "def connect(): key = 'sk-proj-99887766554433221100'; return key"
+        audit_res = bot_instance.audit_code_snippet(vulnerable_code, "test_agent.py")
+        self.assertTrue(audit_res["success"])
+        self.assertEqual(audit_res["audit_report"]["audit_summary"]["credential_leaks"], 1)
+
+        issue_body = bot_instance.generate_github_issue_body({
+            "target_repo": "test/ai-agent-repo",
+            "vulnerable_files_count": 1,
+            "findings": [audit_res]
+        })
+        self.assertIn("OWASP AI Security Audit Report", issue_body)
+        print("[TEST 13 PASS] Intelligent GitHub Code & Backend Auditor Bot verified!")
+
 if __name__ == "__main__":
     unittest.main()
+
 
 
 
