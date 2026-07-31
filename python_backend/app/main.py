@@ -512,6 +512,32 @@ def verify_audit_certificate(cert_id: str):
 </body>
 </html>"""
 
+@app.post("/api/v1/webhook/alert")
+def dispatch_security_webhook(payload: dict):
+    """Dispatches real-time security alert payloads to Slack/Discord webhooks."""
+    agent_name = payload.get("agent_name", "TargetAgent")
+    issue = payload.get("issue", "OWASP Security Risk Detected")
+    webhook_url = payload.get("webhook_url", "")
+
+    alert_message = {
+        "text": f"🚨 [Agentic-Eval Security Alert]: OWASP Security Risk detected in AI agent `{agent_name}`!\nIssue: {issue}"
+    }
+
+    if webhook_url and webhook_url.startswith("http"):
+        try:
+            import requests
+            requests.post(webhook_url, json=alert_message, timeout=3)
+        except Exception as e:
+            print(f"[Webhook Error]: {e}")
+
+    return {
+        "success": True,
+        "agent_name": agent_name,
+        "alert_dispatched": True,
+        "message": alert_message["text"]
+    }
+
+
 
 
 
