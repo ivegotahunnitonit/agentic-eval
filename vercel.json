@@ -2,22 +2,22 @@
   "version": 2,
   "builds": [
     {
-      "src": "python_backend/app/main.py",
+      "src": "api/index.py",
       "use": "@vercel/python"
     },
     {
-      "src": "dashboard/orchestrator.html",
+      "src": "index.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "python_backend/app/main.py"
+      "dest": "api/index.py"
     },
     {
       "src": "/(.*)",
-      "dest": "dashboard/orchestrator.html"
+      "dest": "index.html"
     }
   ]
 }
