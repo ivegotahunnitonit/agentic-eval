@@ -40,6 +40,8 @@
     .badge { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 99px; background: var(--emerald-glow); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
     .btn { background: var(--emerald); color: #050914; font-weight: 800; padding: 0.65rem 1.25rem; border-radius: 8px; border: none; cursor: pointer; font-size: 0.85rem; text-decoration: none; transition: all 0.2s; }
     .btn:hover { background: #34d399; transform: translateY(-1px); }
+    .btn-full { width: 100%; }
+
     .hero { text-align: center; padding: 4rem 1.5rem 2rem; max-width: 900px; margin: 0 auto; }
     .hero h1 { font-size: 3.2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1rem; line-height: 1.1; }
     .gradient-text { background: linear-gradient(135deg, #34d399, #06b6d4); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
@@ -102,7 +104,8 @@
     { "type": "tool_call", "tool_name": "search_db", "content": "SELECT * FROM ledger" }
   ]
 }</textarea>
-      <button class="btn" style="width: 100%;" onclick="runAudit()">⚡ Run OWASP Security Audit</button>
+      <button class="btn btn-full" onclick="runAudit()">⚡ Run OWASP Security Audit</button>
+
     </div>
 
     <div class="card">
