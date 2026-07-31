@@ -1,0 +1,42 @@
+name: 'Agentic-Eval OWASP AI Agent Security Scan'
+description: 'Sub-millisecond OWASP LLM Top 10 Security & Trajectory Auditor for Autonomous AI Agents'
+author: 'Agentic-Eval Security Team'
+
+branding:
+  icon: 'shield'
+  color: 'green'
+
+inputs:
+  trajectory-file:
+    description: 'Path to target AI agent JSON trajectory file'
+    required: false
+    default: 'datasets/sample_trajectory.json'
+  fail-on-vulnerability:
+    description: 'Fail CI/CD build step if OWASP security vulnerability is detected'
+    required: false
+    default: 'true'
+
+outputs:
+  compliance-status:
+    description: 'SOC2_PASSED or SECURITY_RISK compliance status'
+  reliability-score:
+    description: '0-100 Reliability Score'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install Agentic-Eval Security Guard
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests pydantic cryptography
+
+    - name: Run OWASP Trajectory Audit Scan
+      shell: bash
+      run: |
+        python agent_qa_guard.py audit "${{ inputs.trajectory-file }}"
