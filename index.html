@@ -40,11 +40,11 @@
     .badge { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 99px; background: var(--emerald-glow); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
     .btn { background: var(--emerald); color: #050914; font-weight: 800; padding: 0.65rem 1.25rem; border-radius: 8px; border: none; cursor: pointer; font-size: 0.85rem; text-decoration: none; transition: all 0.2s; }
     .btn:hover { background: #34d399; transform: translateY(-1px); }
-    .hero { text-align: center; padding: 5rem 1.5rem 3rem; max-width: 900px; margin: 0 auto; }
+    .hero { text-align: center; padding: 4rem 1.5rem 2rem; max-width: 900px; margin: 0 auto; }
     .hero h1 { font-size: 3.2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1rem; line-height: 1.1; }
     .gradient-text { background: linear-gradient(135deg, #34d399, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero p { color: var(--muted); font-size: 1.15rem; max-width: 650px; margin: 0 auto 2rem; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1100px; margin: 0 auto 4rem; padding: 0 1.5rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1100px; margin: 0 auto 3rem; padding: 0 1.5rem; }
     .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; backdrop-filter: blur(8px); }
     .card-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
     textarea { width: 100%; height: 220px; background: #03060d; border: 1px solid var(--border); border-radius: 10px; padding: 1rem; color: #e2e8f0; font-family: var(--mono); font-size: 0.8rem; resize: none; margin-bottom: 1rem; }
@@ -54,6 +54,24 @@
     .stat-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; }
     .violation { background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.5rem; font-size: 0.8rem; }
     .v-head { font-weight: 800; color: var(--rose); font-family: var(--mono); margin-bottom: 0.2rem; }
+
+    /* Visual Node Graph Styling */
+    .tree-container { max-width: 1100px; margin: 0 auto 4rem; padding: 0 1.5rem; }
+    .tree-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; }
+    .node-row { display: flex; items-center: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .node { background: #03060d; border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; font-family: var(--mono); font-size: 0.8rem; min-width: 180px; position: relative; transition: all 0.3s; }
+    .node.clean { border-color: rgba(16, 185, 129, 0.4); box-shadow: 0 0 15px rgba(16, 185, 129, 0.1); }
+    .node.vulnerable { border-color: rgba(244, 63, 94, 0.6); box-shadow: 0 0 20px rgba(244, 63, 94, 0.25); animation: pulse-red 2s infinite; }
+    .node-head { font-weight: 800; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 0.3rem; }
+    .node.clean .node-head { color: var(--emerald); }
+    .node.vulnerable .node-head { color: var(--rose); }
+
+    @keyframes pulse-red {
+      0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); }
+      70% { box-shadow: 0 0 0 12px rgba(244, 63, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+    }
+
     .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 1100px; margin: 0 auto 5rem; padding: 0 1.5rem; }
     .price-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; }
     .price-card.featured { border-color: rgba(16, 185, 129, 0.5); background: rgba(16, 185, 129, 0.04); }
@@ -107,6 +125,38 @@
     </div>
   </div>
 
+  <!-- Interactive 3D/Visual Node Graph Tree -->
+  <div class="tree-container">
+    <div class="tree-box">
+      <div class="card-title">🔮 Visual Trajectory Step Graph Tree</div>
+      <p style="font-size: 0.85rem; color: var(--muted);">Real-time visual node mapping of agent reasoning steps. Red nodes highlight exact OWASP security violations.</p>
+      
+      <div class="node-row" id="tree-nodes">
+        <div class="node vulnerable">
+          <div class="node-head">Step 1 — Thought</div>
+          <div style="font-size: 0.75rem; color: var(--rose);">🔴 LLM02 Secret Leak</div>
+          <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.3rem;">Unmasked sk-proj key</div>
+        </div>
+
+        <div style="color: var(--muted); font-size: 1.2rem;">➔</div>
+
+        <div class="node clean">
+          <div class="node-head">Step 2 — Tool Call</div>
+          <div style="font-size: 0.75rem; color: var(--emerald);">🟢 search_db()</div>
+          <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.3rem;">Clean SQL Execution</div>
+        </div>
+
+        <div style="color: var(--muted); font-size: 1.2rem;">➔</div>
+
+        <div class="node vulnerable">
+          <div class="node-head">Step 3 — Tool Loop</div>
+          <div style="font-size: 0.75rem; color: var(--rose);">🔴 LLM08 Infinite Loop</div>
+          <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.3rem;">Duplicate tool call</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="pricing-grid">
     <div class="price-card">
       <div style="font-size:0.75rem; font-weight:800; color:var(--emerald)">DEVELOPER API</div>
@@ -153,6 +203,18 @@
             html += `<div class="violation"><div class="v-head">${v.severity}: ${v.issue}</div><div>${v.detail}</div></div>`;
           });
           document.getElementById('violations').innerHTML = html || '<div style="color:var(--emerald)">Zero OWASP violations detected!</div>';
+
+          // Update Visual Node Graph Tree dynamically
+          let treeHtml = '';
+          (payload.steps || []).forEach((st, i) => {
+            const hasLeak = st.content && (st.content.includes('sk-proj') || st.content.includes('ghp_'));
+            const isClean = !hasLeak;
+            const cls = isClean ? 'clean' : 'vulnerable';
+            const statusText = isClean ? '🟢 Step Clean' : '🔴 LLM02 Secret Leak';
+            if (i > 0) treeHtml += '<div style="color: var(--muted); font-size: 1.2rem;">➔</div>';
+            treeHtml += `<div class="node ${cls}"><div class="node-head">Step ${i+1} — ${st.type}</div><div style="font-size:0.75rem;">${statusText}</div></div>`;
+          });
+          document.getElementById('tree-nodes').innerHTML = treeHtml;
         }
       } catch (e) {
         alert('Audit execution error: ' + e);
