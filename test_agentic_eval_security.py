@@ -139,8 +139,21 @@ class TestAgenticEvalSecurityEngine(unittest.TestCase):
         self.assertEqual(res["audit_summary"]["compliance_status"], "SOC2_PASSED")
         print("[TEST 10 PASS] Complete 10/10 Security & Reliability Test Suite verified!")
 
+    def test_11_svg_badge_and_public_verification_page(self):
+        """Tests SVG security badge generation and public audit certificate verification route."""
+        from python_backend.app.main import get_secured_badge, verify_audit_certificate
+        badge_res = get_secured_badge(score=95)
+        self.assertIn("<svg", badge_res.body.decode())
+        self.assertIn("Secured by", badge_res.body.decode())
+
+        page_res = verify_audit_certificate("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
+        self.assertIn("Official AI Agent Audit Certificate", page_res)
+        self.assertIn("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", page_res)
+        print("[TEST 11 PASS] Viral SVG Security Badge & Public Audit Certificate Verifier verified!")
+
 if __name__ == "__main__":
     unittest.main()
+
 
 
 
