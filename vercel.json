@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "python_backend/app/main.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "dashboard/orchestrator.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "python_backend/app/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "dashboard/orchestrator.html"
+    }
+  ]
+}
