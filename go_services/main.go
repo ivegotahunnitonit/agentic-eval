@@ -169,11 +169,18 @@ func handleHealth(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8085"
+	}
+
+	http.HandleFunc("/", handleHealth)
 	http.HandleFunc("/health", handleHealth)
 	http.HandleFunc("/api/v1/go/scan-trajectory", handleTrajectoryScan)
 
-	fmt.Println("🚀 Agentic-Eval Golang Security Daemon running on port 8085...")
-	if err := http.ListenAndServe(":8085", nil); err != nil {
+	fmt.Printf("🚀 Agentic-Eval Golang Security Daemon running on port %s...\n", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		fmt.Printf("Go daemon error: %v\n", err)
 	}
 }
+
