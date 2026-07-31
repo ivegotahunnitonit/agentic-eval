@@ -246,10 +246,41 @@ class TestAgenticEvalSecurityEngine(unittest.TestCase):
         self.assertTrue(res["success"])
         print("[TEST 20 PASS] Golang Native Daemon Fast-Route Acceleration verified (1.44 microsec / 775,935 ops/sec)!")
 
+    def test_21_one_line_python_decorator_sdk(self):
+        """Tests 1-line @guard() Python SDK decorator."""
+        from agentic_eval_sdk import guard, AgenticGuardException
 
+        @guard(max_budget_tokens=500, secret_scrubbing=True)
+        def my_agent_func(query: str):
+            return f"Processed query {query} with sk-proj-1234567890abcdef1234567890"
+
+        res = my_agent_func("hello")
+        self.assertNotIn("sk-proj-1234567890abcdef1234567890", res)
+        self.assertIn("[REDACTED_SECRET]", res)
+        print("[TEST 21 PASS] 1-Line @guard() Python Decorator SDK verified!")
+
+    def test_22_auto_pr_patch_engine(self):
+        """Tests automated Pull Request patch generator."""
+        from auto_patch_pr_engine import pr_patch_engine
+        code = "def process_query(prompt):\n    return f'Result {prompt}'"
+        payload = pr_patch_engine.create_pr_payload("test/repo", "agent.py", code)
+        self.assertTrue(payload["success"])
+        self.assertIn("@guard", payload["patched_code"])
+        self.assertIn("Agentic-Eval Security", payload["pr_title"])
+        print("[TEST 22 PASS] Automated 1-Click Pull Request Patch Engine verified!")
+
+    def test_23_adversarial_penetration_test_simulator(self):
+        """Tests adversarial prompt injection and penetration simulator."""
+        from agent_pen_tester import pen_tester_instance
+        report = pen_tester_instance.execute_pen_test("TestAgent_v1")
+        self.assertTrue(report["success"])
+        self.assertGreaterEqual(report["resilience_score_pct"], 75)
+        self.assertEqual(report["penetration_test_status"], "HARDENED")
+        print("[TEST 23 PASS] Adversarial Penetration Attack Simulator verified!")
 
 if __name__ == "__main__":
     unittest.main()
+
 
 
 
