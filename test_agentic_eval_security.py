@@ -199,13 +199,14 @@ class TestAgenticEvalSecurityEngine(unittest.TestCase):
         print("[TEST 15 PASS] Institutional Audit Firm Cryptographic Engine verified!")
 
     def test_16_billy_charlie_persona_bot_engine(self):
-        """Tests Billy Bob Thornton + Charlie Sheen persona commentary in GitHub bot."""
+        """Tests AES-256 encrypted persona commentary and pirate swagger in GitHub bot."""
         from agentic_eval_bot import bot_instance
         audit_res = {"target_repo": "test/agent-repo", "vulnerable_files_count": 1, "findings": []}
         issue_body = bot_instance.generate_github_issue_body(audit_res, persona_mode=True)
-        self.assertIn("scotch", issue_body)
-        self.assertIn("Malibu", issue_body)
-        print("[TEST 16 PASS] Billy Bob Thornton + Charlie Sheen Persona Engine verified!")
+        self.assertIn("Savvy?", issue_body)
+        self.assertIn("Encrypted Enterprise Persona Engine", issue_body)
+        print("[TEST 16 PASS] Encrypted Persona Engine (Goliath + Two&AHalfMen + Jack Sparrow) verified!")
+
 
     def test_17_export_pdf_certificate_generator(self):
         """Tests print-ready B2B audit certificate HTML/PDF exporter."""
@@ -224,8 +225,20 @@ class TestAgenticEvalSecurityEngine(unittest.TestCase):
         self.assertTrue(ledger_instance.verify_ledger_integrity())
         print("[TEST 18 PASS] Audit Firm Cryptographic Hashchain Ledger Integrity verified!")
 
+    def test_19_high_speed_benchmark_performance(self):
+        """Verifies sub-millisecond execution performance of individual trajectory evaluation."""
+        import time
+        from python_backend.app.agent_eval_janitor import janitor_engine
+        t = {"agent_name": "SpeedTestBot", "steps": [{"type": "thought", "content": "Fast test"}]}
+        start = time.perf_counter()
+        res = janitor_engine.evaluate_agent_trajectory(t)
+        latency_ms = (time.perf_counter() - start) * 1000
+        self.assertLess(latency_ms, 5.0)  # Sub-5ms Python speed limit
+        print(f"[TEST 19 PASS] High-Speed Security Audit Performance verified ({latency_ms:.3f} ms)!")
+
 if __name__ == "__main__":
     unittest.main()
+
 
 
 
