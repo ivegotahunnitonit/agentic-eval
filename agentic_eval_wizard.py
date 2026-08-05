@@ -10,6 +10,12 @@ import sys
 import os
 import json
 from typing import Dict, Any
+
+# Ensure project root is on sys.path so submodule imports resolve correctly
+_PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
+
 from python_backend.app.agent_eval_janitor import janitor_engine
 from agent_pen_tester import pen_tester_instance
 
