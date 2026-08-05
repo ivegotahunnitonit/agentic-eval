@@ -677,6 +677,37 @@ async def trigger_security_alert(alert_payload: Dict[str, Any] = Body(...)):
         return {"success": True, "alert": res}
     return {"success": False, "error": "Alert hub unavailable"}
 
+try:
+    from app.stripe_billing_engine import billing_engine
+except ImportError:
+    try:
+        from stripe_billing_engine import billing_engine
+    except ImportError:
+        billing_engine = None
+
+@app.post("/api/v1/stripe/create-checkout-session")
+def create_stripe_checkout_session(payload: Dict[str, Any] = Body(...)):
+    """
+    Creates a Stripe Checkout Session for $19 Dev, $99 Pro, $250 Audit, or $2500 Enterprise.
+    """
+    plan_tier = payload.get("plan_tier", "b2b_audit")
+    email = payload.get("email", "client@example.com")
+    if billing_engine:
+        res = billing_engine.create_checkout_session(plan_tier, email)
+        return res
+    return {"success": False, "error": "Billing engine unavailable"}
+
+@app.post("/api/v1/stripe/webhook")
+def process_stripe_webhook(payload: Dict[str, Any] = Body(...)):
+    """
+    Stripe Webhook Listener: automatically issues cryptographically signed enterprise API keys (age_live_...).
+    """
+    if billing_engine:
+        res = billing_engine.process_webhook_event(payload)
+        return res
+    return {"success": False, "error": "Billing engine unavailable"}
+
+
 
 
 
