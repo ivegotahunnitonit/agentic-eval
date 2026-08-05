@@ -76,16 +76,19 @@ def check_rate_limit(request: Request):
     _rate_limit_store[client_ip] = timestamps
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Lifespan
-# ─────────────────────────────────────────────────────────────────────────────
+import asyncio
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     if _modules_ok:
-        await start_daemon()
+        asyncio.create_task(start_daemon())
     yield
     if _modules_ok:
-        await stop_daemon()
+        try:
+            await stop_daemon()
+        except Exception:
+            pass
+
 
 app = FastAPI(
     title="ACN Telemetry & DePIN Engine",
@@ -324,7 +327,40 @@ def get_wallets():
         }
     }
 
+# ── ENTERPRISE STRIPE BILLING & API KEY GATEWAY ──────────────────────────────
+try:
+    from app.stripe_billing_engine import stripe_engine
+    from app.enterprise_api_keys import api_key_manager
+
+    @app.post("/api/v1/stripe/create-checkout-session")
+    def create_stripe_checkout(payload: dict):
+        """Generates Stripe Checkout Session URL for Developer, Pro Team, B2B Audit, or Enterprise plans."""
+        plan_tier = payload.get("plan_tier", "developer")
+        email = payload.get("email", "client@example.com")
+        return stripe_engine.create_checkout_session(plan_tier, customer_email=email)
+
+    @app.post("/api/v1/stripe/webhook")
+    def handle_stripe_webhook(payload: dict):
+        """Stripe Webhook Listener: Auto-provisions API keys and issues SOC2 attestation certificates."""
+        return stripe_engine.process_webhook_event(payload)
+
+    @app.post("/api/v1/stripe/customer-portal")
+    def create_stripe_customer_portal(payload: dict):
+        """Generates Stripe Customer Portal link for managing active subscriptions."""
+        customer_id = payload.get("customer_id", "cus_default")
+        return stripe_engine.create_customer_portal_session(customer_id)
+
+    @app.post("/api/v1/enterprise/generate-key")
+    def generate_enterprise_key(payload: dict):
+        """Issues cryptographically secure Enterprise API key (`age_live_...`)."""
+        email = payload.get("email", "enterprise@client.com")
+        tier = payload.get("tier", "enterprise")
+        return api_key_manager.generate_api_key(email, tier)
+except Exception as e:
+    print(f"[Stripe Billing Gateway Warning]: {e}")
+
 # ── ENTERPRISE AGENTIC QA & OBSERVABILITY AUDIT ENGINE ───────────────────────────
+
 try:
     from app.agent_eval_janitor import janitor_engine
     @app.post("/api/janitor/audit")
@@ -536,6 +572,35 @@ def dispatch_security_webhook(payload: dict):
         "alert_dispatched": True,
         "message": alert_message["text"]
     }
+
+@app.get("/dashboard", response_class=HTMLResponse)
+@app.get("/app", response_class=HTMLResponse)
+def serve_dashboard():
+    """Serves the Agentic-Eval Security & Observability Dashboard."""
+    root_dir = Path(__file__).resolve().parent.parent.parent
+    index_path = root_dir / "index.html"
+    if index_path.exists():
+        return HTMLResponse(content=index_path.read_text(encoding="utf-8"))
+    return HTMLResponse(content="<h1>Agentic-Eval Dashboard</h1><p>index.html missing</p>")
+
+@app.get("/demystified.html", response_class=HTMLResponse)
+def serve_demystified():
+    """Serves the Bartholomew Demystified Executive Primer page."""
+    root_dir = Path(__file__).resolve().parent.parent.parent
+    p = root_dir / "demystified.html"
+    if p.exists():
+        return HTMLResponse(content=p.read_text(encoding="utf-8"))
+    return HTMLResponse(content="<h1>Bartholomew Demystified Guide</h1><p>demystified.html missing</p>")
+
+@app.get("/PITCH_DECK.html", response_class=HTMLResponse)
+def serve_pitch_deck():
+    """Serves the Bartholomew Interactive Pitch Deck."""
+    root_dir = Path(__file__).resolve().parent.parent.parent
+    p = root_dir / "PITCH_DECK.html"
+    if p.exists():
+        return HTMLResponse(content=p.read_text(encoding="utf-8"))
+    return HTMLResponse(content="<h1>Bartholomew Pitch Deck</h1><p>PITCH_DECK.html missing</p>")
+
 
 
 
