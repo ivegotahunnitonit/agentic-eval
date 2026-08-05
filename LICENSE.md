@@ -1,7 +1,7 @@
-# 📜 Business Source License 1.1 (BSL 1.1)
+#  Business Source License 1.1 (BSL 1.1)
 
-**Software Name:** Agentic-Eval Security Engine  
-**Licensor:** Agentic-Eval Inc. (or individual copyright holder)  
+**Software Name:** Bartholomew  
+**Licensor:** Bartholomew.LLC (or individual copyright holder)  
 **Effective Date:** July 31, 2026  
 **Change Date:** July 31, 2030 (4 years from Effective Date)  
 **Change License:** Apache License, Version 2.0  
@@ -37,7 +37,7 @@ On the **Change Date** specified above, this license shall automatically convert
 
 ---
 
-## 🔒 Commercial & Enterprise Licensing Enquiries
+##  Commercial & Enterprise Licensing Enquiries
 
 To obtain a **Commercial Enterprise License**, **SaaS Reseller License**, or **Custom SLA Agreement**, contact:
 
