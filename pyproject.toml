@@ -27,3 +27,9 @@ classifiers = [
 
 [project.scripts]
 agent-qa-guard = "agent_qa_guard:main"
+
+[tool.pyright]
+pythonVersion = "3.10"
+include = ["."]
+extraPaths = ["."]
+venvPath = "."
