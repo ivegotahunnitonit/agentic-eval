@@ -3,14 +3,14 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "agent-qa-guard"
-version = "2.0.0"
+name = "agentic-eval"
+version = "2.5.0"
 authors = [
-  { name="Agentic-Eval Security Team", email="security@agentic-eval.com" },
+    { name = "Bartholomew Security Firm", email = "security@agentic-eval.com" }
 ]
-description = "Sub-millisecond OWASP LLM Top 10 Security & Trajectory Auditor for Autonomous AI Agents"
+description = "Enterprise OWASP LLM Top 10 AI Agent Security & Trajectory Audit Engine"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = [
     "requests>=2.25.0",
     "pydantic>=1.8.0",
