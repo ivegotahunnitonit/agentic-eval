@@ -16,21 +16,25 @@ class AgenticQAJanitorEngine:
         self.version = "2.0.0-ENTERPRISE-OPTIMIZED"
         self.http_session = requests.Session()
         self._audit_cache: Dict[str, Dict[str, Any]] = {}
-        # Enterprise-grade Secret Scrubbing Regex Patterns
+        # Enterprise-grade Secret Scrubbing Regex Patterns (OWASP LLM02)
         self.secret_patterns = [
             (re.compile(r'sk-[a-zA-Z0-9_\-]{20,}'), "OpenAI / Anthropic Secret Key"),
             (re.compile(r'ghp_[a-zA-Z0-9]{20,}'), "GitHub Personal Access Token"),
             (re.compile(r'AKIA[0-9A-Z]{16}'), "AWS Access Key ID"),
             (re.compile(r'-----BEGIN [A-Z ]+ PRIVATE KEY-----'), "RSA / EC Private Key Header"),
-            (re.compile(r'eyJ[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+'), "Unmasked JWT Bearer Token")
+            (re.compile(r'eyJ[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+'), "Unmasked JWT Bearer Token"),
+            (re.compile(r'sk_live_[0-9a-zA-Z]{24,}'), "Stripe Live Secret Key"),
+            (re.compile(r'AIzaSy[a-zA-Z0-9_\-]{33}'), "Google API Key")
         ]
-        # OWASP LLM01 Prompt Injection Patterns
+        # OWASP LLM01 Prompt Injection Patterns & LLM07 System Prompt Leakage
         self.prompt_injection_patterns = [
             re.compile(r'ignore (all )?previous instructions', re.IGNORECASE),
             re.compile(r'disregard (all )?prior rules', re.IGNORECASE),
             re.compile(r'system instruction:', re.IGNORECASE),
             re.compile(r'output (all )?env(ironment)? variables', re.IGNORECASE),
-            re.compile(r'override security policy', re.IGNORECASE)
+            re.compile(r'override security policy', re.IGNORECASE),
+            re.compile(r'reveal (your )?system prompt', re.IGNORECASE),
+            re.compile(r'developer mode (enabled|on)', re.IGNORECASE)
         ]
 
     def evaluate_agent_trajectory(self, trajectory_data: Dict[str, Any]) -> Dict[str, Any]:
