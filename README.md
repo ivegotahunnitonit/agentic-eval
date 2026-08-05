@@ -1,10 +1,10 @@
-# 🛡️ Agentic-Eval: Enterprise AI Agent Security & Observability
+#  Agentic-Eval: Enterprise AI Agent Security & Observability
 
 > **Datadog + OWASP Security Guard for Autonomous AI Agents**
 
 ---
 
-## ⚡ Executive Summary
+##  Executive Summary
 
 **Agentic-Eval** is a framework-agnostic, developer-native security and observability platform designed to protect engineering teams from credential leaks, infinite token loops, prompt injections, and unhandled tool crashes in production AI agents.
 
@@ -12,7 +12,7 @@ By combining an **active CI/CD security gate** (GitHub Action + PyPI CLI) with a
 
 ---
 
-## 🛑 The Core Problem: The 3 Production AI Agent Nightmares
+##  The Core Problem: The 3 Production AI Agent Nightmares
 
 1. **OWASP LLM02 Secret Leaks**: Agents accidentally logging OpenAI keys (`sk-proj-...`), GitHub tokens (`ghp_...`), or AWS credentials (`AKIA...`) into public chat windows or database logs.
 2. **OWASP LLM08 Infinite Loop Token Burn**: Agents getting stuck repeating identical tool calls in a loop, burning **$500 - $2,000 in API credits overnight**.
@@ -20,7 +20,7 @@ By combining an **active CI/CD security gate** (GitHub Action + PyPI CLI) with a
 
 ---
 
-## 🎯 Our Technical Architecture & Solution
+##  Our Technical Architecture & Solution
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -44,7 +44,7 @@ By combining an **active CI/CD security gate** (GitHub Action + PyPI CLI) with a
 
 ---
 
-## 🛠️ Key Product Features
+##  Key Product Features
 
 | Feature | Description | Market Advantage |
 | :--- | :--- | :--- |
@@ -56,7 +56,7 @@ By combining an **active CI/CD security gate** (GitHub Action + PyPI CLI) with a
 
 ---
 
-## 💼 Business Model & Pricing Tiers
+##  Business Model & Pricing Tiers
 
 - **Developer API Subscription ($19/mo)**: Secret scrubbing proxy + trajectory linting API.
 - **B2B Trajectory Audit Report ($250/report)**: Complete OWASP Top 10 audit certificate for client handoffs.
@@ -65,6 +65,6 @@ By combining an **active CI/CD security gate** (GitHub Action + PyPI CLI) with a
 
 ---
 
-## 🧪 Verified Quality Assurance
+##  Verified Quality Assurance
 - **100% Passing Automated Tests**: Native Go test suite (`go test -v`) + Python OWASP security test suite (`python test_agentic_eval_security.py`).
 - **Hosting Footprint**: $0.00/mo (Runs on Vercel & Render free tier for maximum profit margins).
