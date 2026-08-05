@@ -3,8 +3,10 @@
     { "source": "/api/(.*)", "destination": "/api/index.py" },
     { "source": "/verify/(.*)", "destination": "/api/index.py" },
     { "source": "/dashboard", "destination": "/api/index.py" },
+    { "source": "/monitor", "destination": "/api/index.py" },
     { "source": "/demystified.html", "destination": "/api/index.py" },
     { "source": "/PITCH_DECK.html", "destination": "/api/index.py" }
   ]
 }
+
 
