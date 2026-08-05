@@ -707,6 +707,36 @@ def process_stripe_webhook(payload: Dict[str, Any] = Body(...)):
         return res
     return {"success": False, "error": "Billing engine unavailable"}
 
+try:
+    from app.enterprise_adapters import enterprise_adapters
+except ImportError:
+    try:
+        from enterprise_adapters import enterprise_adapters
+    except ImportError:
+        enterprise_adapters = None
+
+@app.post("/api/v1/adapters/datadog")
+def export_datadog_adapter(audit_payload: Dict[str, Any] = Body(...)):
+    """Datadog LLM Observability span exporter."""
+    if enterprise_adapters:
+        return enterprise_adapters.export_datadog_llm_span(audit_payload)
+    return {"error": "Adapters module unavailable"}
+
+@app.post("/api/v1/adapters/wiz")
+def export_wiz_adapter(audit_payload: Dict[str, Any] = Body(...)):
+    """Wiz Cloud Security posture finding exporter."""
+    if enterprise_adapters:
+        return enterprise_adapters.export_wiz_security_finding(audit_payload)
+    return {"error": "Adapters module unavailable"}
+
+@app.get("/api/v1/adapters/launchdarkly")
+def evaluate_launchdarkly_adapter():
+    """LaunchDarkly dynamic feature flag evaluator."""
+    if enterprise_adapters:
+        return enterprise_adapters.evaluate_launchdarkly_guardrail_flag()
+    return {"error": "Adapters module unavailable"}
+
+
 
 
 
