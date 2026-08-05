@@ -12,7 +12,7 @@ import argparse
 def generate_pitch(company_name: str, niche: str = "AI Agent Startup") -> str:
     pitch = f"""
 ================================================================================
-🎯 B2B COLD PITCH FOR: {company_name} ({niche})
+[TARGET] B2B COLD PITCH FOR: {company_name} ({niche})
 ================================================================================
 
 [EMAIL / LINKEDIN DM TEMPLATE]
@@ -25,9 +25,9 @@ Noticed {company_name} is building autonomous agents for {niche}.
 
 Enterprise CFOs and security teams are freezing AI deployments right now over OWASP vulnerabilities like credential leaks (`sk-proj`, AWS keys) and multi-step tool loops.
 
-We built Agentic-Eval—a sub-millisecond Golang engine that audits AI agent trajectories against OWASP Top 10 for LLMs security rules.
+We built Agentic-Eval--a sub-millisecond Golang engine that audits AI agent trajectories against OWASP Top 10 for LLMs security rules.
 
-No pitch—just a free test: Send me a single JSON step trajectory of your agent's reasoning loop. I'll run it through our sub-millisecond scanner for free and send back a diagnostic breakdown.
+No pitch--just a free test: Send me a single JSON step trajectory of your agent's reasoning loop. I'll run it through our sub-millisecond scanner for free and send back a diagnostic breakdown.
 
 If you want the official B2B Security Audit Certificate to hand to your enterprise buyers to close deals faster, it's $250.
 
