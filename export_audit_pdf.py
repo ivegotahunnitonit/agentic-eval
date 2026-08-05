@@ -95,7 +95,7 @@ def main():
     out_html = generate_pdf_certificate_html(sample_cert)
     with open("b2b_audit_certificate.html", "w", encoding="utf-8") as f:
         f.write(out_html)
-    print("✅ Exported print-ready B2B Audit Certificate to b2b_audit_certificate.html!")
+    print("[OK] Exported print-ready B2B Audit Certificate to b2b_audit_certificate.html!")
 
 if __name__ == "__main__":
     main()
