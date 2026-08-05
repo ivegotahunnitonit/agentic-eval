@@ -646,6 +646,38 @@ def verify_certificate(cert_id: str):
         return HTMLResponse(content=cert_path.read_text(encoding="utf-8"))
     return HTMLResponse(content=f"<h1>Certificate Verification: {cert_id}</h1><p>Status: VERIFIED_PASSED (SHA-256 Validated)</p>")
 
+@app.get("/monitor", response_class=HTMLResponse)
+def serve_monitor():
+    """Serves the Agentic-Eval Live Real-Time Security Alert Dashboard."""
+    root_dir = Path(__file__).resolve().parent.parent.parent
+    p = root_dir / "monitor.html"
+    if p.exists():
+        return HTMLResponse(content=p.read_text(encoding="utf-8"))
+    return HTMLResponse(content="<h1>Agentic-Eval Live Monitor</h1><p>monitor.html missing</p>")
+
+try:
+    from app.alert_hub import alert_hub
+except ImportError:
+    try:
+        from alert_hub import alert_hub
+    except ImportError:
+        alert_hub = None
+
+@app.websocket("/api/v1/alerts/subscribe")
+async def websocket_alert_subscribe(websocket: Request):
+    """Live WebSocket alert subscription endpoint."""
+    if alert_hub:
+        await alert_hub.connect(websocket)
+
+@app.post("/api/v1/alerts/trigger")
+async def trigger_security_alert(alert_payload: Dict[str, Any] = Body(...)):
+    """Inbound REST trigger for real-time security alerts."""
+    if alert_hub:
+        res = await alert_hub.broadcast_alert(alert_payload)
+        return {"success": True, "alert": res}
+    return {"success": False, "error": "Alert hub unavailable"}
+
+
 
 
 
